@@ -1,0 +1,167 @@
+import React, { useState } from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, TextInput, View, TouchableOpacity, Text, ScrollView, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
+
+// Tela de Login
+function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+};
+  const handleLogin = () => {
+    if (email === 'admin' && senha === 'admin') {
+      console.log('Login bem-sucedido!');
+      navigation.navigate('Escolha');
+    } else {
+      console.log('Credenciais inválidas.');
+    }
+  };
+
+  const handleForgot = () => {
+    console.log('Navegando para recuperar senha...');
+  };
+
+  const handleRegister = () => {
+    console.log('Navegando para cadastro...');
+  };
+
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        <Image source={require('./assets/logo.webp') style={styles.imagem} />
+        <Text style={styles.texto}>Acesse o MovMeter</Text>
+        <StatusBar style="auto" />
+        <TextInput
+          style={styles.input}
+          placeholder="Digite seu e-mail"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Digite sua senha"
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry={true}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <View style={styles.rowContainer}>
+          <TouchableOpacity style={styles.register} onPress={handleRegister}>
+            <Text style={styles.txtregister}>Cadastrar-me</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.forgot} onPress={handleForgot}>
+            <Text style={styles.txtforgot}>Esqueci minha senha</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity style={styles.entrar} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Entrar</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
+}
+
+// Tela de Escolha de Articulação
+function EscolhaArticulacaoScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.voltar} onPress={() => navigation.goBack()}>
+        <Text style={styles.voltarText}>Voltar</Text>
+      </TouchableOpacity>
+      <Text style={styles.title}>Escolha a articulação</Text>
+    </View>
+  );
+}
+
+// Componente principal
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Escolha" component={EscolhaArticulacaoScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+// Estilos
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 100,
+  },
+  imagem: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+  },
+  texto: {
+    textAlign: 'center',
+    paddingTop: 60,
+    paddingBottom: 20,
+    fontSize: 20,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    paddingLeft: 10,
+    width: '80%',
+    borderRadius: 5,
+    marginBottom: 15,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+  },
+  forgot: {
+    alignSelf: 'flex-end',
+    paddingBottom: 20,
+  },
+  txtforgot: {
+    color: '#4a92fa',
+    textDecorationLine: 'underline',
+  },
+  txtregister: {
+    color: '#4a92fa',
+    textDecorationLine: 'underline',
+  },
+  entrar: {
+    marginTop: 10,
+    backgroundColor: '#4a92fa',
+    width: 100,
+    height: 50,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  voltar: {
+    position: 'absolute',
+    top: 20,
+    left: 10,
+    padding: 10,
+  },
+  voltarText: {
+    color: '#4a92fa',
+    fontSize: 16,
+    textDecorationLine: 'underline',
+  },
+});
